@@ -59,23 +59,7 @@ namespace DracXGG.Providers
 
         Task<ServiceOperationResponse> IServiceOperationsProvider.InvokeOperation(string operationId, InsensitiveDictionary<JToken> connectionParameters, ServiceOperationRequest serviceOperationRequest)
         {
-            if (operationId == "SHA256Encode")
-            {
-                string content = serviceOperationRequest.Parameters["content"].ToString();
-                var encoding = new System.Text.ASCIIEncoding();
-                byte[] keyByte = Convert.FromBase64String("VWY7DYdyfpf7zz0+a/JcveLDFMTNPDxMImPpw31DNTI5rLI5zNb9Lhtfq/wOHnbBJdm1CYKUsQY9EU+KcbQh9w==");
-                byte[] messageBytes = encoding.GetBytes(content);
-
-                string result = string.Empty;
-                using (var hmacsha256 = new HMACSHA256(keyByte))
-                {
-                    byte[] hash = hmacsha256.ComputeHash(messageBytes);
-                    result = Convert.ToBase64String(hash);
-                }
-
-                return Task.FromResult(new ServiceOperationResponse(JObject.FromObject(new { EncodedContent = result }), System.Net.HttpStatusCode.Created));
-            }
-            else if (operationId == "Generate Workspace Signature")
+            if (operationId == "Generate Workspace Signature")
             {
                 //string result = String.Empty;
 
